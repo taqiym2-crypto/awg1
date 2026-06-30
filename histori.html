@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SolarTracker - Riwayat</title>
+    <link rel="stylesheet" href="assets/historis.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1><i class="fas fa-sun"></i> SolarTracker</h1>
+            <p>Riwayat Data dan Log Sistem</p>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <a href="dashboard.html" class="nav-btn">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            <a href="analisis.html" class="nav-btn">
+                <i class="fas fa-chart-line"></i> Analisis
+            </a>
+            <a href="histori.html" class="nav-btn active">
+                <i class="fas fa-history"></i> Riwayat
+            </a>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="filter-controls">
+            <div class="filter-section">
+                <h3><i class="fas fa-filter"></i> Filter Data</h3>
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="dateRange"><i class="fas fa-calendar-alt"></i> Rentang Tanggal</label>
+                        <select id="dateRange" class="filter-select">
+                            <option value="today">Hari Ini</option>
+                            <option value="yesterday">Kemarin</option>
+                            <option value="7days" selected>7 Hari Terakhir</option>
+                            <option value="30days">30 Hari Terakhir</option>
+                            <option value="custom">Kustom</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="dataType"><i class="fas fa-database"></i> Jenis Data</label>
+                        <select id="dataType" class="filter-select">
+                            <option value="all" selected>Semua Data</option>
+                            <option value="energy">Energi</option>
+                            <option value="efficiency">Efisiensi</option>
+                            <option value="maintenance">Pemeliharaan</option>
+                            <option value="alerts">Peringatan</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="sortBy"><i class="fas fa-sort"></i> Urutkan Berdasarkan</label>
+                        <select id="sortBy" class="filter-select">
+                            <option value="date_desc" selected>Tanggal (Terbaru)</option>
+                            <option value="date_asc">Tanggal (Terlama)</option>
+                            <option value="value_desc">Nilai (Tertinggi)</option>
+                            <option value="value_asc">Nilai (Terendah)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="filter-actions">
+                    <button id="applyFilter" class="filter-btn primary">
+                        <i class="fas fa-check"></i> Terapkan Filter
+                    </button>
+                    <button id="resetFilter" class="filter-btn secondary">
+                        <i class="fas fa-redo"></i> Reset Filter
+                    </button>
+                    <button id="exportHistory" class="filter-btn success">
+                        <i class="fas fa-download"></i> Ekspor Riwayat
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Summary -->
+        <div class="history-summary">
+            <div class="summary-card">
+                <div class="summary-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <div class="summary-info">
+                    <h3>Total Energi Terkumpul</h3>
+                    <p class="summary-value">2,845.7 kWh</p>
+                    <p class="summary-period">30 Hari Terakhir</p>
+                </div>
+            </div>
+            
+            <div class="summary-card">
+                <div class="summary-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="summary-info">
+                    <h3>Rata-rata Efisiensi</h3>
+                    <p class="summary-value">86.4%</p>
+                    <p class="summary-period">Performasi Stabil</p>
+                </div>
+            </div>
+            
+            <div class="summary-card">
+                <div class="summary-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="summary-info">
+                    <h3>Peringatan Sistem</h3>
+                    <p class="summary-value">3</p>
+                    <p class="summary-period">Dalam 7 Hari</p>
+                </div>
+            </div>
+            
+            <div class="summary-card">
+                <div class="summary-icon">
+                    <i class="fas fa-wrench"></i>
+                </div>
+                <div class="summary-info">
+                    <h3>Pemeliharaan</h3>
+                    <p class="summary-value">2 Kali</p>
+                    <p class="summary-period">Bulan Ini</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Tabs -->
+        <div class="history-tabs">
+            <div class="tab-headers">
+                <button class="tab-header active" data-tab="dataLog">
+                    <i class="fas fa-table"></i> Log Data
+                </button>
+                <button class="tab-header" data-tab="maintenanceLog">
+                    <i class="fas fa-tools"></i> Pemeliharaan
+                </button>
+                <button class="tab-header" data-tab="alertsLog">
+                    <i class="fas fa-bell"></i> Peringatan
+                </button>
+                <button class="tab-header" data-tab="reports">
+                    <i class="fas fa-file-alt"></i> Laporan
+                </button>
+            </div>
+            
+            <div class="tab-content active" id="dataLog">
+                <div class="table-container">
+                    <table id="historyTable" class="display">
+                        <thead>
+                            <tr>
+                                <th>Tanggal & Waktu</th>
+                                <th>Energi (kWh)</th>
+                                <th>Arus (A)</th>
+                                <th>Tegangan (V)</th>
+                                <th>Daya (W)</th>
+                                <th>Efisiensi (%)</th>
+                                <th>Suhu (°C)</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                            <!-- Data akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="maintenanceLog">
+                <div class="maintenance-list">
+                    <div class="maintenance-item">
+                        <div class="maintenance-header">
+                            <span class="maintenance-date">15 Jan 2024, 10:30</span>
+                            <span class="maintenance-status status-completed">Selesai</span>
+                        </div>
+                        <div class="maintenance-title">Pembersihan Panel Surya</div>
+                        <div class="maintenance-desc">
+                            Pembersihan rutin panel surya dari debu dan kotoran. Semua panel telah dibersihkan dengan air demineralisasi.
+                        </div>
+                        <div class="maintenance-technician">
+                            <i class="fas fa-user"></i> Teknisi: Budi Santoso
+                        </div>
+                    </div>
+                    
+                    <div class="maintenance-item">
+                        <div class="maintenance-header">
+                            <span class="maintenance-date">8 Jan 2024, 14:15</span>
+                            <span class="maintenance-status status-completed">Selesai</span>
+                        </div>
+                        <div class="maintenance-title">Kalibrasi Inverter</div>
+                        <div class="maintenance-desc">
+                            Kalibrasi sistem inverter untuk optimasi konversi daya. Parameter telah disesuaikan dengan standar pabrik.
+                        </div>
+                        <div class="maintenance-technician">
+                            <i class="fas fa-user"></i> Teknisi: Ahmad Rizki
+                        </div>
+                    </div>
+                    
+                    <div class="maintenance-item">
+                        <div class="maintenance-header">
+                            <span class="maintenance-date">2 Jan 2024, 09:00</span>
+                            <span class="maintenance-status status-scheduled">Terjadwal</span>
+                        </div>
+                        <div class="maintenance-title">Pemeriksaan Kabel</div>
+                        <div class="maintenance-desc">
+                            Pemeriksaan sistem kabel dan konektor untuk memastikan tidak ada korosi atau kerusakan.
+                        </div>
+                        <div class="maintenance-technician">
+                            <i class="fas fa-user"></i> Teknisi: (Belum ditugaskan)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="alertsLog">
+                <div class="alerts-list">
+                    <div class="alert-item alert-warning">
+                        <div class="alert-header">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span class="alert-date">14 Jan 2024, 13:45</span>
+                        </div>
+                        <div class="alert-title">Penurunan Efisiensi</div>
+                        <div class="alert-desc">
+                            Efisiensi sistem turun menjadi 78% (dari rata-rata 85%). Kemungkinan disebabkan oleh kondisi cuaca berawan.
+                        </div>
+                    </div>
+                    
+                    <div class="alert-item alert-info">
+                        <div class="alert-header">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="alert-date">12 Jan 2024, 08:20</span>
+                        </div>
+                        <div class="alert-title">Puncak Produksi Energi</div>
+                        <div class="alert-desc">
+                            Sistem mencapai produksi energi tertinggi: 42.5 kWh. Kondisi cuaca cerah mendukung optimalisasi panel.
+                        </div>
+                    </div>
+                    
+                    <div class="alert-item alert-error">
+                        <div class="alert-header">
+                            <i class="fas fa-times-circle"></i>
+                            <span class="alert-date">10 Jan 2024, 16:30</span>
+                        </div>
+                        <div class="alert-title">Koneksi Sensor Terputus</div>
+                        <div class="alert-desc">
+                            Sensor suhu panel 3 mengalami gangguan koneksi. Sistem otomatis beralih ke sensor cadangan.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="reports">
+                <div class="reports-list">
+                    <div class="report-item">
+                        <div class="report-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="report-info">
+                            <div class="report-title">Laporan Bulanan - Desember 2023</div>
+                            <div class="report-details">
+                                <span><i class="fas fa-calendar"></i> 1 Des - 31 Des 2023</span>
+                                <span><i class="fas fa-file-alt"></i> 15 halaman</span>
+                                <span><i class="fas fa-download"></i> 2.4 MB</span>
+                            </div>
+                        </div>
+                        <button class="report-download">
+                            <i class="fas fa-download"></i> Unduh
+                        </button>
+                    </div>
+                    
+                    <div class="report-item">
+                        <div class="report-icon">
+                            <i class="fas fa-file-excel"></i>
+                        </div>
+                        <div class="report-info">
+                            <div class="report-title">Data Raw - November 2023</div>
+                            <div class="report-details">
+                                <span><i class="fas fa-calendar"></i> 1 Nov - 30 Nov 2023</span>
+                                <span><i class="fas fa-file-alt"></i> CSV Format</span>
+                                <span><i class="fas fa-download"></i> 1.8 MB</span>
+                            </div>
+                        </div>
+                        <button class="report-download">
+                            <i class="fas fa-download"></i> Unduh
+                        </button>
+                    </div>
+                    
+                    <div class="report-item">
+                        <div class="report-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="report-info">
+                            <div class="report-title">Analisis Performa Triwulan</div>
+                            <div class="report-details">
+                                <span><i class="fas fa-calendar"></i> Okt - Des 2023</span>
+                                <span><i class="fas fa-file-alt"></i> Analisis Komparatif</span>
+                                <span><i class="fas fa-download"></i> 3.1 MB</span>
+                            </div>
+                        </div>
+                        <button class="report-download">
+                            <i class="fas fa-download"></i> Unduh
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="user-info">
+                <div class="user-avatar">A</div>
+                <div class="user-details">
+                    <h3>Admin</h3>
+                    <div class="status-online">
+                        <div class="online-dot"></div>
+                        <span>Online</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="update-info">
+                <div class="update-time">Data riwayat diperbarui setiap jam</div>
+                <div class="last-update" id="lastUpdateTime">Memuat...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Custom Date Range -->
+    <div id="dateRangeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-calendar-alt"></i> Pilih Rentang Tanggal Kustom</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="date-inputs">
+                    <div class="date-input">
+                        <label for="startDate">Tanggal Mulai</label>
+                        <input type="date" id="startDate" value="2024-01-01">
+                    </div>
+                    <div class="date-input">
+                        <label for="endDate">Tanggal Selesai</label>
+                        <input type="date" id="endDate" value="2024-01-15">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelDateRange" class="modal-btn secondary">Batal</button>
+                <button id="applyDateRange" class="modal-btn primary">Terapkan</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/historis.js"></script>
+</body>
+</html>

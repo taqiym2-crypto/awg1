@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SolarTracker Dashboard</title>
+  <link rel="stylesheet" href="assets/dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo-section">
+        <i class="fas fa-sun"></i>
+        <h1>Solar<span>Tracker</span></h1>
+      </div>
+      
+      <nav class="main-nav">
+        <a href="dashboard.html" class="nav-item active">
+          <i class="fas fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="analisis.html" class="nav-item">
+          <i class="fas fa-chart-line"></i>
+          <span>Analisis</span>
+        </a>
+        <a href="histori.html" class="nav-item">
+          <i class="fas fa-history"></i>
+          <span>Riwayat</span>
+        </a>
+      </nav>
+      
+      <div class="user-section">
+        <div class="user-info">
+          <i class="fas fa-user-circle"></i>
+          <div>
+            <h4>Admin</h4>
+            <p>Online</p>
+          </div>
+        </div>
+        <a href="index.html" class="logout-btn">
+          <i class="fas fa-sign-out-alt"></i>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="content-header">
+        <h2>Dashboard Monitoring Efektivitas Panel Surya</h2>
+        <div class="header-actions">
+          <div class="time-display">
+            <i class="far fa-clock"></i>
+            <span id="current-time">Loading...</span>
+          </div>
+          <button class="refresh-btn" id="refresh-btn">
+            <i class="fas fa-sync-alt"></i> Refresh
+          </button>
+        </div>
+      </header>
+
+      <!-- Monitoring Cards -->
+      <section class="monitoring-section">
+        <h3><i class="fas fa-bolt"></i> Monitoring Real-time</h3>
+        
+        <div class="cards-grid">
+          <!-- Arus Panel Surya -->
+          <div class="monitoring-card">
+            <div class="card-icon">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <div class="card-content">
+              <h4>Arus Panel Surya</h4>
+              <div class="value-display">
+                <span class="value" id="current-value">8.42</span>
+                <span class="unit">A</span>
+              </div>
+              <div class="card-trend up">
+                <i class="fas fa-arrow-up"></i>
+                <span>+0.22A dari jam lalu</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tegangan Panel Surya -->
+          <div class="monitoring-card">
+            <div class="card-icon">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <div class="card-content">
+              <h4>Tegangan Panel Surya</h4>
+              <div class="value-display">
+                <span class="value" id="voltage-value">48.6</span>
+                <span class="unit">V</span>
+              </div>
+              <div class="card-trend stable">
+                <i class="fas fa-minus"></i>
+                <span>Stabil</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Daya Panel Surya -->
+          <div class="monitoring-card">
+            <div class="card-icon">
+              <i class="fas fa-sun"></i>
+            </div>
+            <div class="card-content">
+              <h4>Daya Panel Surya</h4>
+              <div class="value-display">
+                <span class="value" id="power-value">409.2</span>
+                <span class="unit">W</span>
+              </div>
+              <div class="card-trend up">
+                <i class="fas fa-arrow-up"></i>
+                <span>+52.3W dari jam lalu</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Daya Dihasilkan -->
+          <div class="monitoring-card highlight">
+            <div class="card-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="card-content">
+              <h4>Daya Dihasilkan (Hari Ini)</h4>
+              <div class="value-display">
+                <span class="value" id="generated-power">4.85</span>
+                <span class="unit">kWh</span>
+              </div>
+              <div class="progress-info">
+                <span>Target: 6.2 kWh</span>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 78%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Status Baterai -->
+          <div class="monitoring-card">
+            <div class="card-icon">
+              <i class="fas fa-battery-full"></i>
+            </div>
+            <div class="card-content">
+              <h4>Status Baterai</h4>
+              <div class="value-display">
+                <span class="value" id="battery-level">92</span>
+                <span class="unit">%</span>
+              </div>
+              <div class="battery-display">
+                <div class="battery">
+                  <div class="battery-level" style="height: 92%"></div>
+                </div>
+                <span>Kapasitas</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Efisiensi Sistem -->
+          <div class="monitoring-card">
+            <div class="card-icon">
+              <i class="fas fa-percentage"></i>
+            </div>
+            <div class="card-content">
+              <h4>Efisiensi Sistem</h4>
+              <div class="value-display">
+                <span class="value" id="efficiency-value">87.5</span>
+                <span class="unit">%</span>
+              </div>
+              <div class="card-trend up">
+                <i class="fas fa-arrow-up"></i>
+                <span>Sangat Baik</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Charts & Activity -->
+      <section class="content-grid">
+        <!-- Power Chart -->
+        <div class="chart-section">
+          <div class="section-header">
+            <h3><i class="fas fa-chart-area"></i> Grafik Output Daya (24 Jam Terakhir)</h3>
+            <div class="time-filter">
+              <select>
+                <option>24 Jam Terakhir</option>
+                <option>7 Hari Terakhir</option>
+                <option>30 Hari Terakhir</option>
+              </select>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="power-chart"></canvas>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="activity-section">
+          <div class="section-header">
+            <h3><i class="fas fa-history"></i> Aktivitas Terkini</h3>
+          </div>
+          <div class="activity-list">
+            <div class="activity-item highlight">
+              <div class="activity-icon">
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <div class="activity-content">
+                <h4>Puncak Produksi Tercapai</h4>
+                <p>Produksi mencapai 520W pada pukul 12:00</p>
+                <span class="activity-time">10 MENIT LALU</span>
+              </div>
+            </div>
+            
+            <div class="activity-item">
+              <div class="activity-icon">
+                <i class="fas fa-sync-alt"></i>
+              </div>
+              <div class="activity-content">
+                <h4>Kalibrasi Sensor Selesai</h4>
+                <p>Sensor arus dan tegangan telah dikalibrasi otomatis</p>
+                <span class="activity-time">30 MENIT LALU</span>
+              </div>
+            </div>
+            
+            <div class="activity-item">
+              <div class="activity-icon">
+                <i class="fas fa-battery-full"></i>
+              </div>
+              <div class="activity-content">
+                <h4>Baterai Terisi Penuh</h4>
+                <p>Baterai mencapai kapasitas 100% pada pukul 08:30</p>
+                <span class="activity-time">2 JAM LALU</span>
+              </div>
+            </div>
+            
+            <div class="activity-item">
+              <div class="activity-icon">
+                <i class="fas fa-sun"></i>
+              </div>
+              <div class="activity-content">
+                <h4>Tracking Aktif</h4>
+                <p>Sistem tracking mengikuti matahari pada posisi 45°</p>
+                <span class="activity-time">3 JAM LALU</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="dashboard-footer">
+        <p>SolarTracker Dashboard • Data diperbarui secara real-time • <span id="last-update">Loading...</span></p>
+      </footer>
+    </main>
+  </div>
+
+  <script src="ass"></script>
+</body>
+</html>

@@ -1,0 +1,328 @@
+/* =========================================
+   REGISTER CSS - SolarTracker Theme (Super Simplified)
+========================================= */
+
+/* RESET & BASE */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* BACKGROUND */
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #FFD700 150%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* REGISTER CONTAINER */
+.register-container {
+  width: 100%;
+  max-width: 400px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+/* REGISTER HEADER */
+.register-header {
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  padding: 30px 20px;
+  text-align: center;
+  color: white;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.logo i {
+  font-size: 2.2rem;
+  color: #FFD700;
+}
+
+.logo h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.logo span {
+  color: #FFD700;
+}
+
+.register-subtitle {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* REGISTER FORM CONTAINER */
+.register-form-container {
+  padding: 30px 25px 25px;
+}
+
+/* INPUT GROUPS */
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #1e3c72;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.input-group label i {
+  color: #FFD700;
+  width: 16px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #FFD700;
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+}
+
+.input-group input::placeholder {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+/* PASSWORD TOGGLE */
+.input-group {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 14px;
+  top: 42px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.password-toggle:hover {
+  color: #1e3c72;
+}
+
+/* TERMS SECTION */
+.terms-section {
+  margin: 20px 0;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: relative;
+  height: 18px;
+  width: 18px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  margin-right: 10px;
+  border: 2px solid #ddd;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+  background-color: #FFD700;
+  border-color: #FFD700;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.terms-link {
+  color: #1e3c72;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.terms-link:hover {
+  color: #FFD700;
+  text-decoration: underline;
+}
+
+/* REGISTER BUTTON */
+.register-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.register-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(30, 60, 114, 0.3);
+}
+
+/* DIVIDER */
+.register-divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.register-divider::before,
+.register-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #ddd;
+}
+
+.register-divider span {
+  padding: 0 12px;
+}
+
+/* SOCIAL REGISTER */
+.social-register {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.social-btn {
+  padding: 12px 24px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background: white;
+  color: #555;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+  border-color: #DB4437;
+  color: #DB4437;
+}
+
+/* LOGIN LINK */
+.login-link {
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #eaeaea;
+}
+
+.login-link a {
+  color: #1e3c72;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  color: #FFD700;
+  text-decoration: underline;
+}
+
+/* REGISTER FOOTER */
+.register-footer {
+  background: #f8f9fa;
+  padding: 15px;
+  text-align: center;
+  border-top: 1px solid #eaeaea;
+}
+
+.register-footer p {
+  color: #666;
+  font-size: 0.8rem;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+  
+  .register-container {
+    max-width: 100%;
+  }
+  
+  .register-header {
+    padding: 25px 15px;
+  }
+  
+  .logo h1 {
+    font-size: 1.6rem;
+  }
+  
+  .register-form-container {
+    padding: 25px 20px 20px;
+  }
+}
